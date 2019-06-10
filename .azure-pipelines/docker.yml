@@ -6,7 +6,7 @@ steps:
   - task: CmdLine@2
     displayName: Build ${{ image }} image
     inputs:
-      script: docker build -t shawntoffel/backup:${{ image }}-$(Build.SourceBranchName) ${{ image }}
+      script: docker build -t shawntoffel/backup:$(Build.SourceBranchName) ${{ image }}
 
   - task: Docker@2
     condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/${{ image }}'))
@@ -15,4 +15,4 @@ steps:
       containerRegistry: dockerhub
       command: push
       repository: shawntoffel/backup
-      tags: ${{ image }}-$(Build.SourceBranchName)
+      tags: $(Build.SourceBranchName)
