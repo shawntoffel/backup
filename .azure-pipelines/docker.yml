@@ -1,0 +1,25 @@
+parameters:
+  images: []
+
+steps:
+- task: CmdLine@2
+  displayName: Find changed files
+  inputs:
+    script: echo "##vso[task.setvariable variable=changedFiles]$(git diff HEAD HEAD~ --name-only)"
+    
+- ${{ each image in parameters.images }}:
+
+  - task: CmdLine@2
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/${{ image }}'), contains(variables['changedFiles'], '${{ image }}'))
+    displayName: Build ${{ image }} image
+    inputs:
+      script: docker build -t shawntoffel/backup:$(Build.SourceBranch)
+
+  - task: Docker@2
+    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/tags/${{ image }}'), contains(variables['changedFiles'], '${{ image }}'))
+    displayName: Docker push
+    inputs:
+      containerRegistry: dockerhub
+      command: push
+      repository: shawntoffel/backup
+      tags: $(Build.SourceBranch)

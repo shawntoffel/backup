@@ -1,0 +1,21 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+trigger:
+  branches:
+    include:
+      - refs/heads/*
+      - refs/tags/*
+
+steps:
+- task: CmdLine@2
+  displayName: shellcheck
+  inputs:
+    script:  | 
+      apt-get install shellcheck 
+      find . -type f -name '*.sh' | xargs shellcheck --external-sources
+
+- template: .azure-pipelines-templates/docker.yml
+  parameters:
+    images:
+    - cockroachdb
