@@ -11,11 +11,9 @@ steps:
 - task: CmdLine@2
   displayName: shellcheck
   inputs:
-    script:  | 
-      apt-get install shellcheck 
-      find . -type f -name '*.sh' | xargs shellcheck --external-sources
+    script: find . -type f -name '*.sh' | xargs shellcheck
 
-- template: .azure-pipelines-templates/docker.yml
+- template: .azure-pipelines/docker.yml
   parameters:
     images:
     - cockroachdb
