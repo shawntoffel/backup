@@ -1,5 +1,5 @@
 #!/bin/sh
-set -eo  pipefail
+set -eo pipefail
 
 TIMESTAMP=$(date +%Y%m%d%H%M%S)
 

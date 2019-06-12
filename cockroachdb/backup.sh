@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eo pipefail
 
 TIMESTAMP=$(date +%Y%m%d%H%M%S)
 
@@ -13,8 +13,7 @@ echo "starting cockroachdb backup"
 mkdir -p "$BACKUP_DIR"
 
 echo "looking for databases..."
-databases=$(cockroach sql --host "$REMOTE_HOST" --insecure -e "show databases;")
-databases=$(echo "$databases" | tail -n +2)
+databases=$(cockroach sql --host "$REMOTE_HOST" --insecure -e "show databases;" | tail -n +2)
 
 echo "creating backups..."
 for database in $databases; do
