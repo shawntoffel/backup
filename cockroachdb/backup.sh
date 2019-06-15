@@ -1,10 +1,7 @@
 #!/bin/sh
-set -eo pipefail
+set -e pipefail
 
 TIMESTAMP=$(date +%Y%m%d%H%M%S)
-
-PUBLIC_KEY_FILE=/var/secrets/public_key.pem
-AZ_CONNECTION_STRING_FILE=/var/secrets/az_connection_string
 
 BACKUP_DIR=backups
 BACKUP_FILE="$BACKUP_NAME.$TIMESTAMP.tar.gz"
