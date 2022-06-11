@@ -35,4 +35,7 @@ az storage container create --connection-string "$(cat "$AZ_CONNECTION_STRING_FI
 echo "uploading..."
 az storage blob upload --connection-string "$(cat "$AZ_CONNECTION_STRING_FILE")" --container-name "$AZ_CONTAINER" --file "$BACKUP_FILE" --name "$BACKUP_FILE"
 
+echo "setting blob access tier..."
+az storage blob set-tier --connection-string "$(cat "$AZ_CONNECTION_STRING_FILE")" --container "$AZ_CONTAINER" --name "$BACKUP_FILE" --tier "$AZ_BLOB_ACCESS_TIER"
+
 echo "finished cockroachdb backup"
