@@ -9,7 +9,7 @@ echo "starting file backup..."
 echo "compressing..."
 tar -zcvf "$backup_file" "$BACKUP_DIRECTORY"
 
-encrypted_directory="/tmp/enc_backup_$timestamp"
+encrypted_directory="$BACKUP_DIRECTORY/tmp/enc_backup_$timestamp"
 mkdir -p "$encrypted_directory"
 
 echo "encrypting..."
