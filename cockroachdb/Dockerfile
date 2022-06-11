@@ -11,5 +11,6 @@ COPY backup.sh .
 RUN chmod +x backup.sh
 ENV AZ_CONTAINER=backups \
     REMOTE_HOST=localhost \
-    BACKUP_NAME=backup
+    BACKUP_NAME=backup \
+    AZ_BLOB_ACCESS_TIER=Cool
 ENTRYPOINT ["./backup.sh"]
